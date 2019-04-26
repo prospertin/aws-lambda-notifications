@@ -23,21 +23,16 @@ export default class Document {
             throw new TypeError(`The message metaData requires a url! Value Provided: ${document}`);
         }
 
-        if (!document.quiddity.body || !document.quiddity.body.publishDate || !document.quiddity.body.publishDate.date) {
-            throw new TypeError(`The message body requires a publishDate! Value Provided: ${document}`);
-        }
-
         if (!document.alertingSubscriptionId) {
             throw new TypeError(`The message requires an alertingSubscriptionId! Value Provided: ${document}`);
         }
 
         // Alerting Subscription Id string will contain the ID of a 
         // given search at the end of the string "-" delimited 
-        const searchIdInfoArr = document.alertingSubscriptionId.split('-');
+        //const searchIdInfoArr = document.alertingSubscriptionId.split('-');
 
         this.id = document.quiddity.id;
         this.url = document.quiddity.metaData.url;
-        this.publishDate = document.quiddity.body.publishDate.date;
-        this.searchId = searchIdInfoArr[searchIdInfoArr.length - 1];
+        this.subscriptionId = document.alertingSubscriptionId
     }
 }

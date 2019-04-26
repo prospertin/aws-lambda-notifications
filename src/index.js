@@ -2,7 +2,7 @@
 import AWS from 'aws-sdk';
 import Promise from 'bluebird';
 import Decompress from './decompress';
-import NotificationProcessor from './notifications';
+import NotificationProducer from './notifications';
 
 AWS.config.setPromisesDependency(Promise);
 
@@ -39,9 +39,10 @@ async function consume(event) {
                 batchSize: 10
             };
 
-            const notificationProcessor = new NotificationProcessor(options);
+            const notificationProducer = new NotificationProducer(options);
 
-            return Promise.resolve({ message: 'Search Document; ' + documents.toString()});
+            return notificationProducer.sendMessageBatch();
+            //return Promise.resolve({ message: 'Search Document; ' + documents.toString()});
         } else {
             return Promise.resolve({ message: 'No Alerts to Process' });
         }
